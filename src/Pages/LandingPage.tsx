@@ -6,7 +6,7 @@ const LandingPage = () => {
   const [searchParams] = useSearchParams();
 
   // Extract query parameters with fallback values
-  const ctx = searchParams.get("ctx") ?? "Guest1";
+  const ctx = searchParams.get("ctx") ?? "Guest";
   const service = searchParams.get("service") ?? "our service";
   const mno = searchParams.get("mno") ?? "unknown provider";
   const country = searchParams.get("country") ?? "your country";
