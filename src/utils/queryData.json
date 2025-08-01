@@ -1,0 +1,20 @@
+[
+  {
+    "ctx": "subscribe",
+    "service": "bc",
+    "mno": "mtn",
+    "country": "za"
+  },
+  {
+    "ctx": "Guest",
+    "service": "Support",
+    "mno": "airtel",
+    "country": "India"
+  },
+  {
+    "ctx": "Admin",
+    "service": "Billing",
+    "mno": "vodafone",
+    "country": "India"
+  }
+]
