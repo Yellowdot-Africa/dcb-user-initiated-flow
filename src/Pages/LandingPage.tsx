@@ -11,14 +11,15 @@ const LandingPage = () => {
   const mno = searchParams.get("mno") ?? "unknown provider";
   const country = searchParams.get("country") ?? "your country";
 
+  const queryInfoProps = { ctx, service, mno, country };
+
   return (
     <>
       <Header />
       <main>
-        <QueryInfo ctx={ctx} service={service} mno={mno} country={country} />
+        <QueryInfo {...queryInfoProps} />
       </main>
     </>
-
   );
 };
 
