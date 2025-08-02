@@ -5,7 +5,6 @@ import Header from "../Components/Header";
 const LandingPage = () => {
   const [searchParams] = useSearchParams();
 
-  // Extract query parameters with fallback values
   const ctx = searchParams.get("ctx") ?? "Guest";
   const service = searchParams.get("service") ?? "our service";
   const mno = searchParams.get("mno") ?? "unknown provider";
@@ -16,7 +15,7 @@ const LandingPage = () => {
   return (
     <>
       <Header />
-      <main>
+      <main className="w-4/5 mx-auto">
         <QueryInfo {...queryInfoProps} />
       </main>
     </>

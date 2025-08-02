@@ -11,15 +11,13 @@ type QueryInfoProps = {
 
 const QueryInfo = (props: QueryInfoProps) => {
   const { ctx, service, mno, country } = props;
-  const navigate = useNavigate(); // 👈 You MUST define this
+  const navigate = useNavigate();
 
-  // Convert inputs to lowercase once
   const inputCtx = ctx.toLowerCase();
   const inputService = service.toLowerCase();
   const inputMno = mno.toLowerCase();
   const inputCountry = country.toLowerCase();
 
-  // Match all query parameters from JSON
   const matchedEntry = queryData.find(
     (entry) =>
       entry.ctx.toLowerCase() === inputCtx &&
@@ -28,35 +26,41 @@ const QueryInfo = (props: QueryInfoProps) => {
       entry.country.toLowerCase() === inputCountry
   );
 
-  // Redirect if not matched or not MTN
   useEffect(() => {
     if (!matchedEntry || matchedEntry.mno !== "mtn") {
-      navigate("/NotFound"); // 🔁 Adjust route as needed
+      navigate("/NotFound");
     }
   }, [matchedEntry, navigate]);
 
   if (!matchedEntry || matchedEntry.mno !== "mtn") return null;
 
   return (
-    <div className="w-4/5 max-w-7xl mx-auto bg-yellow-500 rounded shadow p-8 mt-6">
-      <div className="flex items-start mb-4">
-        <div className="flex-shrink-0 w-20 flex justify-start">
+    <div className="min-h-screen w-full bg-yellow-500 rounded shadow p-6 sm:p-12 md:p-16 flex items-start justify-center">
+      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-10 mt-4 sm:mt-8 text-left w-full sm:w-11/12 lg:w-4/5">
+
+        <div className="w-32 sm:w-40 md:w-48 flex justify-center sm:justify-start">
           <img
             src="https://www.mtn.com/wp-content/themes/mtn-refresh/public/img/mtn-logo.svg"
             alt="MTN logo"
             className="w-full h-auto object-contain"
           />
         </div>
-        <div className="pl-8 text-left max-w-xs whitespace-nowrap">
-          <h2 className="text-lg font-semibold text-black">
-            Welcome to Mobile Network Operator, MTN
+
+
+        <div className="flex-1 min-w-[250px]">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-black tracking-wide">
+            Welcome to <span className="text-white italic underline">Mobile Network Operator</span>,&nbsp;
+            <span className="text-blue-800 font-black uppercase">"{matchedEntry.mno.toUpperCase()}"</span>!
           </h2>
-          <p className="text-sm text-gray-800">
-            To subscribe,{" "}
-            <a href="tel:+1234567890" className="text-blue-700 underline font-medium">
+          <p className="text-base sm:text-lg text-gray-900 mt-4">
+            To <span className="font-semibold italic text-blue-800">subscribe</span>,&nbsp;
+            <a
+              href="tel:*123*4#"
+              className="text-blue-700 font-bold underline hover:text-blue-900 transition-colors duration-200"
+            >
               click here
-            </a>{" "}
-            or dial <span className="font-semibold text-black">+1234567890</span> on your phone.
+            </a>
+            , or dial <span className="font-semibold text-black">*123*4#</span> on your phone. 📞
           </p>
         </div>
 
