@@ -29,7 +29,7 @@ const QueryInfo = (props: QueryInfoProps) => {
   // Optional: log or handle unmatched cases, but don't return or navigate
   useEffect(() => {
     if (!matchedEntry) {
-      console.warn("No matched entry found.");
+      navigate("/NotFound");
     }
   }, [matchedEntry]);
 
@@ -48,14 +48,14 @@ const QueryInfo = (props: QueryInfoProps) => {
 
             <div className="flex-1 min-w-[250px] mt-2 sm:mt-0 space-y-6">
               <h2 className="text-2xl sm:text-3xl text-black font-bold leading-snug">
-                Welcome to <span className="italic">Yellow Dot Games</span>,
+                Welcome to <span className="italic">Yellow Dot Games</span>!
               </h2>
 
-              <h2 className="text-2xl sm:text-3xl text-gray-900 font-bold">
-                To <span className="italic text-blue-800">subscribe</span>&nbsp;
+              <h2 className="text-2xl sm:text-3xl text-black font-bold leading-snug">
+                To <span className="italic text-blue-800">subscribe,</span>&nbsp;
                 <a
                   href="tel:*123*4#"
-                  className="text-blue-700 underline hover:text-blue-900 transition-colors duration-200 font-medium"
+                  className="text-blue-700 underline hover:text-blue-900 transition-colors duration-200"
                 >
                   click here
                 </a>
@@ -84,14 +84,14 @@ const QueryInfo = (props: QueryInfoProps) => {
 
             <div className="flex-1 min-w-[250px] mt-2 sm:mt-0 space-y-6">
               <h2 className="text-2xl sm:text-3xl text-black font-bold leading-snug">
-                Welcome to <span className="italic">Yellow Dot Games</span>,
+                Welcome to <span className="italic">Yellow Dot Games</span>!
               </h2>
 
-              <h2 className="text-2xl sm:text-3xl text-gray-900 font-bold">
-                To <span className="italic text-blue-800">subscribe</span>&nbsp;
+              <h2 className="text-2xl sm:text-3xl text-black font-bold leading-snug">
+                To <span className="italic text-blue-800">subscribe,</span>&nbsp;
                 <a
                   href="tel:*123*4#"
-                  className="text-blue-700 underline hover:text-blue-900 transition-colors duration-200 font-medium"
+                  className="text-blue-700 underline hover:text-blue-900 transition-colors duration-200"
                 >
                   click here
                 </a>
