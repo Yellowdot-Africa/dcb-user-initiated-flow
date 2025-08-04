@@ -15,7 +15,7 @@ const LandingPage = () => {
   return (
     <>
       <Header />
-      <main className="w-4/5 mx-auto">
+      <main className="">
         <QueryInfo {...queryInfoProps} />
       </main>
     </>

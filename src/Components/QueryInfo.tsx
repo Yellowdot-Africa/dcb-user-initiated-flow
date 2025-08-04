@@ -20,52 +20,92 @@ const QueryInfo = (props: QueryInfoProps) => {
 
   const matchedEntry = queryData.find(
     (entry) =>
-      entry.ctx.toLowerCase() === inputCtx &&
-      entry.service.toLowerCase() === inputService &&
-      entry.mno.toLowerCase() === inputMno &&
-      entry.country.toLowerCase() === inputCountry
+      entry.ctx.trim().toLowerCase() === inputCtx &&
+      entry.service.trim().toLowerCase() === inputService &&
+      entry.mno.trim().toLowerCase() === inputMno &&
+      entry.country.trim().toLowerCase() === inputCountry
   );
 
+  // Optional: log or handle unmatched cases, but don't return or navigate
   useEffect(() => {
-    if (!matchedEntry || matchedEntry.mno !== "mtn") {
-      navigate("/NotFound");
+    if (!matchedEntry) {
+      console.warn("No matched entry found.");
     }
-  }, [matchedEntry, navigate]);
-
-  if (!matchedEntry || matchedEntry.mno !== "mtn") return null;
+  }, [matchedEntry]);
 
   return (
-    <div className="min-h-screen w-full bg-yellow-500 rounded shadow p-6 sm:p-12 md:p-16 flex items-start justify-center">
-      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-10 mt-4 sm:mt-8 text-left w-full sm:w-11/12 lg:w-4/5">
+    <>
+      {matchedEntry?.mno === "mtn" && (
+        <div className="min-h-screen w-full bg-yellow-500 rounded shadow p-4 sm:p-8 md:p-16 flex items-start justify-center font-sans">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-10 mt-6 sm:mt-10 text-left w-full sm:w-11/12 lg:w-4/5">
+            <div className="w-28 sm:w-36 md:w-44 flex justify-center sm:justify-start">
+              <img
+                src="https://www.mtn.com/wp-content/themes/mtn-refresh/public/img/mtn-logo.svg"
+                alt="MTN logo"
+                className="w-full h-auto object-contain"
+              />
+            </div>
 
-        <div className="w-32 sm:w-40 md:w-48 flex justify-center sm:justify-start">
-          <img
-            src="https://www.mtn.com/wp-content/themes/mtn-refresh/public/img/mtn-logo.svg"
-            alt="MTN logo"
-            className="w-full h-auto object-contain"
-          />
+            <div className="flex-1 min-w-[250px] mt-2 sm:mt-0 space-y-6">
+              <h2 className="text-2xl sm:text-3xl text-black font-bold leading-snug">
+                Welcome to <span className="italic">Yellow Dot Games</span>,
+              </h2>
+
+              <h2 className="text-2xl sm:text-3xl text-gray-900 font-bold">
+                To <span className="italic text-blue-800">subscribe</span>,&nbsp;
+                <a
+                  href="tel:*123*4#"
+                  className="text-blue-700 underline hover:text-blue-900 transition-colors duration-200 font-medium"
+                >
+                  click here
+                </a>
+                , or dial{" "}
+                <span className="text-black font-medium">
+                  {matchedEntry.ussd}
+                </span>{" "}
+                on your phone. 📞
+              </h2>
+            </div>
+          </div>
         </div>
+      )}
 
 
-        <div className="flex-1 min-w-[250px]">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-black tracking-wide">
-            Welcome to <span className="text-white italic underline">Mobile Network Operator</span>,&nbsp;
-            <span className="text-blue-800 font-black uppercase">"{matchedEntry.mno.toUpperCase()}"</span>!
-          </h2>
-          <p className="text-base sm:text-lg text-gray-900 mt-4">
-            To <span className="font-semibold italic text-blue-800">subscribe</span>,&nbsp;
-            <a
-              href="tel:*123*4#"
-              className="text-blue-700 font-bold underline hover:text-blue-900 transition-colors duration-200"
-            >
-              click here
-            </a>
-            , or dial <span className="font-semibold text-black">*123*4#</span> on your phone. 📞
-          </p>
+      {matchedEntry?.mno === "telkom" && (
+        <div className="min-h-screen w-full bg-gray-160 rounded shadow p-4 sm:p-8 md:p-16 flex items-start justify-center font-sans">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-10 mt-6 sm:mt-10 text-left w-full sm:w-11/12 lg:w-4/5">
+            <div className="w-28 sm:w-36 md:w-44 flex justify-center sm:justify-start">
+              <img
+                src="https://www.telkom.co.za/assets/logo/telkom-logo.svg"
+                alt="Telkom logo"
+                className="w-full h-auto object-contain"
+              />
+            </div>
+
+            <div className="flex-1 min-w-[250px] mt-2 sm:mt-0 space-y-6">
+              <h2 className="text-2xl sm:text-3xl text-black font-bold leading-snug">
+                Welcome to <span className="italic">Yellow Dot Games</span>,
+              </h2>
+
+              <h2 className="text-2xl sm:text-3xl text-gray-900 font-bold">
+                To <span className="italic text-blue-800">subscribe</span>,&nbsp;
+                <a
+                  href="tel:*123*4#"
+                  className="text-blue-700 underline hover:text-blue-900 transition-colors duration-200 font-medium"
+                >
+                  click here
+                </a>
+                , or dial{" "}
+                <span className="text-black font-medium">
+                  {matchedEntry.ussd}
+                </span>{" "}
+                on your phone. 📞
+              </h2>
+            </div>
+          </div>
         </div>
-
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

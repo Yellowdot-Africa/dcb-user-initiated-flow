@@ -13,9 +13,9 @@ const Header = () => {
         </div>
 
         {/* Heading */}
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-800 tracking-wide italic underline decoration-yellow-400 decoration-2 underline-offset-4 drop-shadow-sm text-center sm:text-left">
+        {/* <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-800 tracking-wide italic underline decoration-yellow-400 decoration-2 underline-offset-4 drop-shadow-sm text-center sm:text-left">
           DCB User Initiated Flow 🚀
-        </h1>
+        </h1> */}
         
       </div>
     </header>

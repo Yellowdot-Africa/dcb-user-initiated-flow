@@ -1,20 +1,44 @@
 [
   {
     "ctx": "subscribe",
+    "service": "ydt",
+    "mno": "telkom",
+    "country": "za",
+    "ussd": "*179*11#"
+  },
+  {
+    "ctx": "subscribe",
+    "service": "s7",
+    "mno": "telkom",
+    "country": "za",
+    "ussd": "*179*12#"
+  },
+  {
+    "ctx": "subscribe",
+    "service": "ydg",
+    "mno": "telkom",
+    "country": "za",
+    "ussd": "*179*28#"
+  },
+  {
+    "ctx": "subscribe",
+    "service": "ydg",
+    "mno": "telkom",
+    "country": "zh",
+    "ussd": "*179*10#"
+  },
+  {
+    "ctx": "subscribe",
     "service": "bc",
+    "mno": "telkom",
+    "country": "zh",
+    "ussd": "*179*22#"
+  },
+  {
+    "ctx": "subscribe",
+    "service": "ydot_games",
     "mno": "mtn",
-    "country": "za"
-  },
-  {
-    "ctx": "Guest",
-    "service": "Support",
-    "mno": "airtel",
-    "country": "India"
-  },
-  {
-    "ctx": "Admin",
-    "service": "Billing",
-    "mno": "vodafone",
-    "country": "India"
+    "country": "za",
+    "ussd": "*686*7552#"
   }
 ]
