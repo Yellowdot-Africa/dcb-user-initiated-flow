@@ -1,37 +1,37 @@
 [
   {
     "ctx": "subscribe",
-    "service": "ydt",
+    "service": "y_dot_tv",
     "mno": "telkom",
     "country": "za",
     "ussd": "*179*11#"
   },
   {
     "ctx": "subscribe",
-    "service": "s7",
+    "service": "s_7",
     "mno": "telkom",
     "country": "za",
     "ussd": "*179*12#"
   },
   {
     "ctx": "subscribe",
-    "service": "ydg",
+    "service": "ydot_games",
     "mno": "telkom",
     "country": "za",
     "ussd": "*179*28#"
   },
   {
     "ctx": "subscribe",
-    "service": "ydg",
+    "service": "g_w",
     "mno": "telkom",
-    "country": "zh",
+    "country": "za",
     "ussd": "*179*10#"
   },
   {
     "ctx": "subscribe",
-    "service": "bc",
+    "service": "b_c",
     "mno": "telkom",
-    "country": "zh",
+    "country": "za",
     "ussd": "*179*22#"
   },
   {

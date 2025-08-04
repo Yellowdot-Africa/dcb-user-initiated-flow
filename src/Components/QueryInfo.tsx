@@ -52,18 +52,18 @@ const QueryInfo = (props: QueryInfoProps) => {
               </h2>
 
               <h2 className="text-2xl sm:text-3xl text-gray-900 font-bold">
-                To <span className="italic text-blue-800">subscribe</span>,&nbsp;
+                To <span className="italic text-blue-800">subscribe</span>&nbsp;
                 <a
                   href="tel:*123*4#"
                   className="text-blue-700 underline hover:text-blue-900 transition-colors duration-200 font-medium"
                 >
                   click here
                 </a>
-                , or dial{" "}
+                &nbsp;or dial{" "}
                 <span className="text-black font-medium">
                   {matchedEntry.ussd}
                 </span>{" "}
-                on your phone. 📞
+                on your phone.
               </h2>
             </div>
           </div>
@@ -88,18 +88,18 @@ const QueryInfo = (props: QueryInfoProps) => {
               </h2>
 
               <h2 className="text-2xl sm:text-3xl text-gray-900 font-bold">
-                To <span className="italic text-blue-800">subscribe</span>,&nbsp;
+                To <span className="italic text-blue-800">subscribe</span>&nbsp;
                 <a
                   href="tel:*123*4#"
                   className="text-blue-700 underline hover:text-blue-900 transition-colors duration-200 font-medium"
                 >
                   click here
                 </a>
-                , or dial{" "}
+                &nbsp;or dial{" "}
                 <span className="text-black font-medium">
                   {matchedEntry.ussd}
                 </span>{" "}
-                on your phone. 📞
+                on your phone.
               </h2>
             </div>
           </div>
