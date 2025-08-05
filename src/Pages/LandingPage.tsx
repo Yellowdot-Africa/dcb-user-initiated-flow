@@ -1,6 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import QueryInfo from "../Components/QueryInfo";
-import Header from "../Components/Header";
+import QueryInfo from "../components/QueryInfo";
 
 const LandingPage = () => {
   const [searchParams] = useSearchParams();
@@ -14,10 +13,7 @@ const LandingPage = () => {
 
   return (
     <>
-      <Header />
-      <main className="">
-        <QueryInfo {...queryInfoProps} />
-      </main>
+      <QueryInfo {...queryInfoProps} />
     </>
   );
 };
