@@ -1,5 +1,5 @@
 {
-  "name": "dcb-user-initiated-flow",
+  "name": "user-initiated-flow",
   "private": true,
   "version": "0.0.0",
   "type": "module",
