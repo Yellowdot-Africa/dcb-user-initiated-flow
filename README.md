@@ -1,4 +1,4 @@
-# DCB User Initiated Flow
+# User Initiated Flow
 
 ## Overview
 This project implements a frontend flow that navigates based on specific URL parameters.  
