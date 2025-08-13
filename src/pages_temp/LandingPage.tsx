@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import QueryInfo from "../components/QueryInfo";
+import QueryInfo from "../components_temp/QueryInfo";
 
 const LandingPage = () => {
   const [searchParams] = useSearchParams();
