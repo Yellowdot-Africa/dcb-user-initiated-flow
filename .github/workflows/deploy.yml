@@ -8,62 +8,40 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: |
-            node_modules
-            ~/.npm
-          key: ${{ runner.os }}-modules-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-modules-
-
       - name: Install dependencies
-        run: npm ci --prefer-offline --legacy-peer-deps
+        run: npm ci --prefer-offline --no-audit --no-fund
 
-      - name: Install missing type definitions
-        run: npm install --save-dev @types/node
-
-      - name: Clear TypeScript cache
-        run: rm -rf node_modules/.tmp
+      - name: Early TypeScript check (fail fast if types are missing)
+        run: npx tsc --noEmit
 
       - name: Build project
         run: npm run build
 
       - name: Deploy to server
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          password: ${{ secrets.SERVER_PASS }}
           source: "dist/*"
           target: "/var/www/dcb_user_initiated_flow"
-          strip_components: 1
 
-      - name: Restart app on server
-        uses: appleboy/ssh-action@v0.1.10
+      - name: Restart app
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          password: ${{ secrets.SERVER_PASS }}
           script: |
-            cd /var/www/dcb_user_initiated_flow
-            # Check if pm2 process exists and restart, otherwise start new
-            if pm2 list | grep -q "dcb_user_initiated_flow"; then
-              pm2 restart dcb_user_initiated_flow
-            else
-              # For static files, you might want to use a simple HTTP server
-              pm2 start "npx serve -s . -l 3000" --name "dcb_user_initiated_flow"
-            fi
+            pm2 restart dcb_user_initiated_flow || pm2 start /var/www/dcb_user_initiated_flow --name dcb_user_initiated_flow
