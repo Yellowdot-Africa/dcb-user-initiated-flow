@@ -6,73 +6,51 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
-      - name: 📥 Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: ⚡ Cache npm cache & node_modules
-        uses: actions/cache@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
         with:
           path: |
+            node_modules
             ~/.npm
-            **/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-modules-${{ hashFiles('package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-modules-
 
-      - name: 📦 Install dependencies (including missing types)
-        run: |
-          npm ci --prefer-offline --no-audit --progress=false
-          npm install --save-dev \
-            @types/babel__core \
-            @types/babel__generator \
-            @types/babel__template \
-            @types/babel__traverse \
-            @types/estree \
-            @types/json-schema \
-            @types/node \
-            @types/react \
-            @types/react-dom \
-            @types/react-scroll
+      - name: Install dependencies
+        run: npm ci --prefer-offline --legacy-peer-deps
 
-      - name: 🔨 Build the project
+      - name: Build project
         run: npm run build
 
-      - name: 🧾 Check Build Output
-        run: ls -lah ./dist
-
-      - name: 🔐 Configure SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_KEY_YD_TELECEL }}" | tr -d '\r' > ~/.ssh/yd_telecel_key
-          chmod 600 ~/.ssh/yd_telecel_key
-          ssh-keyscan -p 22 -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-
-      - name: 📤 Securely Copy Files to Server
-        run: |
-          ssh -i ~/.ssh/yd_telecel_key -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-          "mkdir -p /var/www/dcb_user_initiated_flow/dist && chown -R ${{ secrets.SSH_USER }}:${{ secrets.SSH_USER }} /var/www/dcb_user_initiated_flow/dist"
-          rsync -e "ssh -i ~/.ssh/yd_telecel_key -o StrictHostKeyChecking=no" -avz --delete ./dist/ \
-          ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/dcb_user_initiated_flow/dist
-
-      - name: 🚀 Deploy dcb_user_initiated_flow on Server
-        uses: appleboy/ssh-action@master
+      - name: Deploy to server
+        uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.DEPLOY_KEY_YD_TELECEL }}
-          port: 22
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: "dist/*"
+          target: "/var/www/dcb_user_initiated_flow"
+
+      - name: Restart app on server
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            echo "🔍 Checking deployed files for dcb_user_initiated_flow..."
-            ls -lah /var/www/dcb_user_initiated_flow/dist
-            echo "🛠 Setting permissions..."
-            chown -R $USER:$USER /var/www/dcb_user_initiated_flow || echo "No permission to chown"
-            chmod -R 755 /var/www/dcb_user_initiated_flow || echo "No permission to chmod"
-            echo "🔄 Restarting Nginx..."
-            systemctl restart nginx || echo "Could not restart nginx"
-            echo "📜 Nginx Error Log:"
-            tail -n 20 /var/log/nginx/error.log || echo "Could not read nginx logs"
-            echo "✅ dcb_user_initiated_flow Deployment Completed!"
+            cd /var/www/dcb_user_initiated_flow
+            pm2 restart all || pm2 start npm --name "dcb_user_initiated_flow" -- run start
