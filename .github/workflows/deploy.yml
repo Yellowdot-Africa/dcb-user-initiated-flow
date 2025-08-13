@@ -20,8 +20,33 @@ jobs:
           node-version: 20
           cache: 'npm'
 
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: ${{ runner.os }}-modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+      - name: Clean npm cache
+        run: npm cache clean --force
+
+      - name: Remove node_modules and package-lock
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm install --legacy-peer-deps --no-audit --no-fund
+
+      - name: Install missing type definitions
+        run: npm install --save-dev @types/node --no-audit --no-fund
+
+      - name: Clear TypeScript cache
+        run: rm -rf node_modules/.tmp
+
+      - name: Verify TypeScript installation
+        run: ./node_modules/.bin/tsc --version
 
       - name: Build project
         run: npm run build
