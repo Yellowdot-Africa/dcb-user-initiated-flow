@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
-import MainLayout from "./layouts/MainLayout";
 
 const App: React.FC = () => {
 
