@@ -33,6 +33,12 @@ jobs:
       - name: Install dependencies
         run: npm ci --prefer-offline --legacy-peer-deps
 
+      - name: Install missing type definitions
+        run: npm install --save-dev @types/node
+
+      - name: Clear TypeScript cache
+        run: rm -rf node_modules/.tmp
+
       - name: Build project
         run: npm run build
 
@@ -44,6 +50,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: "dist/*"
           target: "/var/www/dcb_user_initiated_flow"
+          strip_components: 1
 
       - name: Restart app on server
         uses: appleboy/ssh-action@v0.1.10
@@ -53,4 +60,10 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /var/www/dcb_user_initiated_flow
-            pm2 restart all || pm2 start npm --name "dcb_user_initiated_flow" -- run start
+            # Check if pm2 process exists and restart, otherwise start new
+            if pm2 list | grep -q "dcb_user_initiated_flow"; then
+              pm2 restart dcb_user_initiated_flow
+            else
+              # For static files, you might want to use a simple HTTP server
+              pm2 start "npx serve -s . -l 3000" --name "dcb_user_initiated_flow"
+            fi
