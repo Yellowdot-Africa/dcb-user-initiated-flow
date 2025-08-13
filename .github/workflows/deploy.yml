@@ -29,6 +29,7 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-modules-
+
       - name: Clean npm cache
         run: npm cache clean --force
 
@@ -36,6 +37,7 @@ jobs:
         run: |
           rm -rf node_modules
           rm -f package-lock.json
+          
       - name: Install dependencies
         run: npm install --legacy-peer-deps --no-audit --no-fund
 
@@ -54,25 +56,10 @@ jobs:
       - name: Deploy to server
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.DEPLOY_KEY_YD_TELECEL }}
+          port: 22
           source: "dist/*"
-          target: "/var/www/dcb_user_initiated_flow"
+          target: "/var/www/dcb_user_initiated_flow/dist"
           strip_components: 1
-
-      - name: Restart app on server
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            cd /var/www/dcb_user_initiated_flow
-            # Check if pm2 process exists and restart, otherwise start new
-            if pm2 list | grep -q "dcb_user_initiated_flow"; then
-              pm2 restart dcb_user_initiated_flow
-            else
-              # For static files, you might want to use a simple HTTP server
-              pm2 start "npx serve -s . -l 3000" --name "dcb_user_initiated_flow"
-            fi
