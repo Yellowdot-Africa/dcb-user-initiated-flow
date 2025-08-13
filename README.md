@@ -17,12 +17,12 @@ The application validates the following parameters from the URL before navigatin
 
 | ctx        | service     | mno    | country | ussd        | local url                                                                                 |
 |------------|-------------|--------|---------|-------------|-------------------------------------------------------------------------------------|
-| subscribe  | y_dot_tv    | telkom | za      | *179*11#    | http://localhost:5173/?ctx=subscribe&service=y_dot_tv&mno=telkom&country=za         |
-| subscribe  | s_7         | telkom | za      | *179*12#    | http://localhost:5173/?ctx=subscribe&service=s_7&mno=telkom&country=za              |
-| subscribe  | ydot_games  | telkom | za      | *179*28#    | http://localhost:5173/?ctx=subscribe&service=ydot_games&mno=telkom&country=za       |
-| subscribe  | g_w         | telkom | za      | *179*10#    | http://localhost:5173/?ctx=subscribe&service=g_w&mno=telkom&country=za              |
-| subscribe  | b_c         | telkom | za      | *179*22#    | http://localhost:5173/?ctx=subscribe&service=b_c&mno=telkom&country=za              |
-| subscribe  | ydot_games  | mtn    | za      | *686*7552#  | http://localhost:5173/?ctx=subscribe&service=ydot_games&mno=mtn&country=za          |
+| subscribe  | y_dot_tv    | telkom | za      | \*179\*11#    | http://localhost:5173/?ctx=subscribe&service=y_dot_tv&mno=telkom&country=za         |
+| subscribe  | s_7         | telkom | za      | \*179\*12#    | http://localhost:5173/?ctx=subscribe&service=s_7&mno=telkom&country=za              |
+| subscribe  | ydot_games  | telkom | za      | \*179\*28#    | http://localhost:5173/?ctx=subscribe&service=ydot_games&mno=telkom&country=za       |
+| subscribe  | g_w         | telkom | za      | \*179\*10#    | http://localhost:5173/?ctx=subscribe&service=g_w&mno=telkom&country=za              |
+| subscribe  | b_c         | telkom | za      | \*179\*22#    | http://localhost:5173/?ctx=subscribe&service=b_c&mno=telkom&country=za              |
+| subscribe  | ydot_games  | mtn    | za      | \*686\*7552#  | http://localhost:5173/?ctx=subscribe&service=ydot_games&mno=mtn&country=za          |
 
 
 
